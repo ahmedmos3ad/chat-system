@@ -1,0 +1,6 @@
+# For available configuration options, see:
+#   https://github.com/testdouble/standard
+ruby_version: 3.3.0
+plugins:
+  - standard-rails:
+      target_rails_version: 7.1.3.2
