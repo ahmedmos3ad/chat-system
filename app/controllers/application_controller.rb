@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-
   before_action :set_time_zone
   around_action :use_time_zone
   before_action :validate_request_format
@@ -14,7 +13,7 @@ class ApplicationController < ActionController::API
     request.format = :json if request.format.html? # default to json
     raise ActionController::UnknownFormat unless request.format.json? || request.format.xml? || request.format == Mime::ALL
   end
-  
+
   def set_time_zone
     @time_zone = if request.headers["Timezone"].present? && ActiveSupport::TimeZone[request.headers["Timezone"].to_s].present?
       request.headers["Timezone"].to_s
