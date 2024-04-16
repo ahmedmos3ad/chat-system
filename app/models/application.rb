@@ -5,11 +5,11 @@ class Application < ApplicationRecord
   # has_many :chats, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 255}
-  validates :token, presence: true, length: {is: 36}
+  validates :token, presence: true, length: {is: 36}, if: :persisted? # skip validation for token on create because it will be generated before saving
   validates :token, uniqueness: true, on: :update, if: :token_changed?
   validates :chats_count, numericality: {only_integer: true}
 
-  before_validation :generate_token, on: :create
+  before_create :generate_token
 end
 
 # == Schema Information
