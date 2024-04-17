@@ -1,0 +1,9 @@
+en:
+  errors:
+    invalid_params: Invalid Parameters
+    not_found: The resource you were looking for could not be found.
+    unprocessable_entity: Operation not feasible, the request was well-formed but couldn't be executed due to semantic errors.
+    not_acceptable: "The requested format is not supported. Please use an accepted format."
+    method_not_allowed: "The requested method is not allowed for this resource, please check the API documentation for the correct method."
+    record_not_found: Record Not Found
+    something_went_wrong: An unexpected error occurred while processing your request.

@@ -6,7 +6,7 @@ class API::V1::ApplicationsController < API::V1::BaseController
     application = Application.new(application_params)
     application.save!
     logger.info("Application created with id: #{application.id}")
-    render_response(data: application.as_serialized_json, status: :created)
+    render_response(data: {application: application.as_serialized_json}, status: :created)
   end
 
   private

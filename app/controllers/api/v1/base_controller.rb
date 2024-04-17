@@ -2,6 +2,7 @@
 
 class API::V1::BaseController < ApplicationController
   include API::V1::ResponseHelper
+  include API::V1::ExceptionHandler
 
   before_action :set_time_zone
   around_action :use_time_zone

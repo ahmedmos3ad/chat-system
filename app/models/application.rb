@@ -5,10 +5,11 @@ class Application < ApplicationRecord
   # has_many :chats, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 255}
-  validates :token, presence: true, length: {is: 36}, if: :persisted? # skip validation for token on create because it will be generated before saving
+  validates :token, presence: true, length: {is: 36}, if: :persisted? # skip validation for token on create because it will be generated
   validates :token, uniqueness: true, on: :update, if: :token_changed?
   validates :chats_count, numericality: {only_integer: true}
 
+  # opted to not user before validation here on create to prevent unnecessary db queries when the model is invalid due to other validations
   before_create :generate_token
 end
 
