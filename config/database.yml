@@ -50,6 +50,8 @@ test:
 #
 production:
   <<: *default
-  database: chat_system_production
-  username: chat_system
-  password: <%= ENV["CHAT_SYSTEM_DATABASE_PASSWORD"] %>
+  database: <%= ENV["MYSQL_DATABASE"] %>
+  username: <%= ENV["MYSQL_USER"] %>
+  password: <%= ENV["MYSQL_PASSWORD"] %>
+  host: <%= ENV["MYSQL_HOST"] %>
+  port: <%= ENV["MYSQL_PORT"] %>
