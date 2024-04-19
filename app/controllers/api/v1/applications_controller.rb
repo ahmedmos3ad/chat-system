@@ -14,13 +14,13 @@ class API::V1::ApplicationsController < API::V1::BaseController
 
   def index
     logger.info("Fetching applications with page: #{@page} and per_page: #{@per_page}")
-    applications = Application.all.page(@page).per(@per_page)
+    applications = Application.all
     logger.info("Fetched applications successfully")
-    render_response(data: {applications: applications.as_serialized_json}, status: :ok)
+    render_response(data: {applications: applications.page(@page).per(@per_page).as_serialized_json, pagination_info: {total_count: applications.count, page_number: @page, page_size: @per_page}}, status: :ok)
   end
 
   def show
-    logger.info("fetched application with token: #{params[:token]}, token: #{@application.token}")
+    logger.info("Fetched application with token: #{params[:token]}, token: #{@application.token}")
     render_response(data: {application: @application.as_serialized_json}, status: :ok)
   end
 

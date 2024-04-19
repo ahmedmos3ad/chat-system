@@ -1,0 +1,32 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value
+
+# == Schema Information
+#
+# Table name: chat_rooms
+#
+#  id             :bigint           not null, primary key
+#  messages_count :integer          default(0), not null
+#  number         :integer          not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  application_id :bigint           not null
+#
+# Indexes
+#
+#  index_chat_rooms_on_application_id             (application_id)
+#  index_chat_rooms_on_application_id_and_number  (application_id,number) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (application_id => applications.id)
+#

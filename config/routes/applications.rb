@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-resources :applications, only: [:create, :index] do
-  collection do
-    get ":token", action: :show
-    put ":token", action: :update
-    delete ":token", action: :destroy
+resources :applications, param: :token do
+  resources :chats, only: [:index, :create, :show], param: :number do
+    resources :messages, only: [:index, :create]
   end
 end

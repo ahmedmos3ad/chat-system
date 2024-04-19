@@ -31,5 +31,13 @@ module ChatSystem
 
     config.cache_store = :redis_cache_store, {url: ENV["REDIS_URL"] || "redis://localhost:6379/0", expires_in: 1.hour, namespace: "cache"}
     config.active_job.queue_adapter = :sidekiq
+
+    # This also configures session_options for use below
+    config.session_store :cookie_store, key: '_interslice_session'
+
+    # Required for all session management (regardless of session_store)
+    config.middleware.use ActionDispatch::Cookies
+
+    config.middleware.use config.session_store, config.session_options
   end
 end

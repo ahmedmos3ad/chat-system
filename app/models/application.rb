@@ -2,7 +2,8 @@
 
 class Application < ApplicationRecord
   include Application::ApplicationHelper
-  # has_many :chats, dependent: :destroy
+  
+  has_many :chat_rooms, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 255}
   validates :token, presence: true, length: {is: 36}, if: :persisted? # skip validation for token on create because it will be generated

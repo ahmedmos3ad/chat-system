@@ -1,0 +1,12 @@
+---
+:retry: false
+:verbose: true
+:concurrency: 10
+:pidfile: /tmp/sidekiq.pid
+:queues:
+  - [critical, 2]
+  - [high, 1.5]
+  - [default, 1]
+  - [low, 0.5]
+production:
+  :concurrency: 10

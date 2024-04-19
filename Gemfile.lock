@@ -279,6 +279,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   bootsnap
+  connection_pool
   debug
   jsonapi-serializer
   kaminari
