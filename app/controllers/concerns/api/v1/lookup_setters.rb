@@ -12,6 +12,6 @@ module API::V1::LookupSetters
   end
 
   def set_current_chat_message_chat_room
-    @chat_room = ChatRoom.find_by!(number: params[:chat_number])
+    @chat_room = ChatRoom.joins(:application).where(application: {token: params[:application_token]}).find_by!(number: params[:chat_number])
   end
 end
