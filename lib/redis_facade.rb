@@ -33,6 +33,7 @@ class RedisFacade
           @redis.del(key)
           return set
         ensure
+          logger.info("RedisClient::Releasing lock for #{key}")
           @redis.del("lock:#{key}")
         end
       else
@@ -44,9 +45,24 @@ class RedisFacade
   end
 
   def add_entry_to_set(entry, set_key)
-    logger.info("RedisClient::Adding entry #{entry} to set: #{set_key}")
+    lock_key = "lock:#{set_key}"
+    
     @redis.with do |conn|
-      @redis.sadd(set_key, entry)
+      locked = @redis.setnx(lock_key, 1)
+      if locked
+        logger.info("RedisClient::Aquired lock for #{lock_key} successfully")
+        begin
+          logger.info("RedisClient::Adding entry #{entry} to set: #{set_key}")
+          @redis.sadd(set_key, entry)
+        ensure
+          logger.info("RedisClient::Releasing lock #{lock_key}")
+          @redis.del(lock_key)
+        end
+      else
+        logger.info("RedisClient::Failed to acquire lock for #{set_key}, retrying in 1 second")
+        sleep(1)
+        add_entry_to_set(entry, set_key) # Retry recursively
+      end
     end
   end
 
