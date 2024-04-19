@@ -23,7 +23,6 @@ class RedisFacade
   end
 
   def fetch_and_clear_set_for_key(key)
-    @redis.del("lock:#{key}")
     logger.info("RedisClient::Fetching and clearing #{key}")
     @redis.with do |conn|
       logger.info("RedisClient::Acquiring lock for #{key}")
