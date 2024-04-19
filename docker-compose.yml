@@ -14,18 +14,28 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: sidekiq
-    command: bundle exec sidekiq
+    command: bundle exec sidekiq -q critical,2 -q high,1.5 -q default,1 -q low,0.5
     volumes:
       - .:/app
     depends_on:
       - redis
       - mysql
+      - elasticsearch
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      REDIS_URL: redis://redis:6379/1
-      REDIS_DB: 1
+      REDIS_URL: redis://redis:6379/0
+      REDIS_DB: 0
       RAILS_MASTER_KEY: e65ccc057c83e6437d1a47aeaba02d1e
+      SIDEKIQ_CONCURRENCY: 10
+      SIDEKIQ_RETRY: false
+      SIDEKIQ_VERBOSE: true
+      MYSQL_DATABASE: chat_system_production
+      MYSQL_USER: chat_system
+      MYSQL_PASSWORD: root
+      MYSQL_HOST: mysql
+      RAILS_LOG_LEVEL: "debug"
+      ELASTICSEARCH_URL: http://elasticsearch:9200
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
@@ -49,7 +59,7 @@ services:
       MYSQL_DATABASE: chat_system_production
       MYSQL_USER: chat_system
       MYSQL_PASSWORD: root
-      MYSQL_PORT: 3307
+      MYSQL_PORT: 3307 #3306 is used by my localhost mysql service
     ports:
       - "3307:3306"
     volumes:
@@ -58,13 +68,14 @@ services:
   rails:
     build:
       context: .
-      dockerfile: Dockerfile # Path to your Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
       - redis
       - elasticsearch
       - mysql
+      - sidekiq
     environment:
       RAILS_MASTER_KEY: e65ccc057c83e6437d1a47aeaba02d1e
       MYSQL_DATABASE: chat_system_production
@@ -72,6 +83,8 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_HOST: mysql
       REDIS_URL: redis://redis:6379/0
+      RAILS_LOG_LEVEL: "debug"
+      ELASTICSEARCH_URL: http://elasticsearch:9200
 volumes:
   esdata:
   mysql_data:
