@@ -145,8 +145,7 @@ response
 request
 
 ```bash
-curl --location '127.0.0.1:3000/api/v1/applications?page_number=1&page_size=2' \
---data ''
+curl --location '127.0.0.1:3000/api/v1/applications?page_number=1&page_size=2'
 ```
 
 response
@@ -158,7 +157,7 @@ response
         "applications": [
             {
                 "token": "5620f0c0-f5d5-4102-8d11-f08370a330a3",
-                "name": "some app name",
+                "name": "some updated app name",
                 "created_at": "2024-04-16T06:46:28.665Z",
                 "updated_at": "2024-04-16T06:46:28.665Z"
             },
@@ -183,8 +182,7 @@ response
 request
 
 ```bash
-curl --location '127.0.0.1:3000/api/v1/applications/d684aa5f-c3e7-4f84-ac26-22bbe7afc581' \
---data ''
+curl --location '127.0.0.1:3000/api/v1/applications/d684aa5f-c3e7-4f84-ac26-22bbe7afc581'
 ```
 response
 
@@ -206,22 +204,11 @@ request
 
 ```bash
 curl --location --request DELETE '127.0.0.1:3000/api/v1/applications/d684aa5f-c3e7-4f84-ac26-22bbe7afc581' \
---header 'Content-Type: application/json' \
---data '{
-    "application":{
-        "name": "some app name"
-    }
-}'
+--header 'Content-Type: application/json'
 ```
 
-response
-```json
-{
-    "application":{
-        "name": "some app name"
-    }
-}
-```
+returns a 204 with no body on success
+
 
 ## Application Chat Endpoints
 
@@ -336,12 +323,7 @@ request
 
 ```bash
 curl --location --request GET '127.0.0.1:3000/api/v1/applications/cfe8bd8f-d3f2-487e-a650-0d4c2e796b24/chats/1/messages?page_number=1&page_size=10' \
---header 'Content-Type: application/json' \
---data '{
-    "message": {
-        "body": "some body"
-    }
-}'
+--header 'Content-Type: application/json'
 ```
 
 response
@@ -377,8 +359,7 @@ response
 
 request
 ```bash
-curl --location '127.0.0.1:3000/api/v1/applications/cfe8bd8f-d3f2-487e-a650-0d4c2e796b24/chats/1/messages/search?page_number=1&page_size=10&keyword=at%20day' \
---data ''
+curl --location '127.0.0.1:3000/api/v1/applications/cfe8bd8f-d3f2-487e-a650-0d4c2e796b24/chats/1/messages/search?page_number=1&page_size=10&keyword=at%20day'
 ```
 
 response
