@@ -369,7 +369,7 @@ response
     "data": {
         "chat_messages": [
             {
-                "number": 2,
+                "number": 1,
                 "body": "what a great day",
                 "created_at": "2024-04-19T16:58:54.686Z",
                 "updated_at": "2024-04-19T16:58:54.686Z"
