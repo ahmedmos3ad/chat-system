@@ -19,11 +19,11 @@
     ```bash
     RAILS_ENV=development
     DOCKER_ENV=dev # This is used to determine which Dockerfile is used, delete this if you wanna use the production Dockerfile
-    RAILS_MASTER_KEY=your_rails_master_key # This is used to decrypt the credentials.yml.enc file and must be provided
+    RAILS_MASTER_KEY=your_rails_master_key # This is used to decrypt the credentials.yml.enc file and must be provided the value usually resides in config/master.key unless you have credentials defined for specific environments, if that is the case look for development.key and production.key and pass the appropriate value depending on the RAILS_ENV and which dockerfile you are using.
     DATABASE_URL=mysql://mysql:password@mysql:3307/chat_system_development # This is used to connect to the database, the format is mysql://username:password@host:port/database_name
     MYSQL_ROOT_USER=mysql
     MYSQL_DATABASE=chat_system_development
-    MYSQL_PORT=3307
+    MYSQL_PORT=3307 #should match the port mapping in the docker-compose file
     MYSQL_USER=mysql
     MYSQL_PASSWORD=password
     MYSQL_HOST=mysql
