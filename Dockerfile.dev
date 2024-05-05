@@ -1,0 +1,33 @@
+# syntax = docker/dockerfile:1
+
+# Base image with Ruby and necessary dependencies
+ARG RUBY_VERSION=3.3.0
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+
+# Rails app directory
+WORKDIR /rails
+
+# Set development environment
+ENV BUNDLE_DEPLOYMENT="0" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT=""
+
+# Install necessary packages
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential libpq-dev git libvips pkg-config
+
+# Copy Gemfile and install gems
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+# Copy application code
+COPY . .
+
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile app/ lib/
+
+# Expose ports for development
+EXPOSE 3000
+
+# Entrypoint for development
+CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
